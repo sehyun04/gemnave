@@ -91,7 +91,16 @@
     }
 
     const slot = resolveSlot(label, slots);
-    if (!slot) return { ok: false, reason: `"${label}" 이 젬의 어느 수치인지 모릅니다` };
+    if (!slot) {
+      // 효과 이름은 6종이 전부이고 모두 아틀라스에 있다. 그래서 여기 오는 이유는
+      // "이름을 모른다" 가 아니라 "이 젬의 1번/2번 효과 이름과 안 맞는다" 하나다.
+      // 원인을 잘못 말하면 사용자가 엉뚱한 곳을 고친다.
+      return {
+        ok: false,
+        reason: `"${label}" 은 이 젬의 1번/2번 효과 이름과 다릅니다`
+          + ' - "읽은 젬" 의 효과 이름을 확인하세요',
+      };
+    }
 
     // "효과 변경"은 값이 없고 옵션명만 바뀐다는 뜻이다.
     if (/변경/.test(norm(reading.value && reading.value.text))) {

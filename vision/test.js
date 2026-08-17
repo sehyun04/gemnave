@@ -453,10 +453,12 @@ console.log('읽은 글자 -> 확률 표 항목 id');
   // 질서 젬도 같은 자리를 쓴다.
   check('질서 포인트도 point 로', interpret.resolveSlot('질서 포인트', slots) === 'point');
 
-  // 모르는 효과 이름은 조용히 넘기면 안 된다.
+  // 이 젬의 효과가 아닌 이름이 뜨면 조용히 넘기면 안 된다. 효과 이름은 6종이 전부이고
+  // 모두 아틀라스에 있으므로, 안 맞는다는 것은 효과 이름 칸이 화면과 어긋났다는 뜻이다.
   const unknown = interpret.toOutcomeId(
     { labelText: '보스 피해', value: { prefix: 'lv', digit: '1', suffix: '증가' } }, slots);
-  check('모르는 효과 이름은 거부', !unknown.ok && /어느 수치인지/.test(unknown.reason), unknown.reason);
+  check('이 젬의 효과가 아닌 이름은 거부',
+    !unknown.ok && /효과 이름과 다릅니다/.test(unknown.reason), unknown.reason);
 
   // 표기와 슬롯이 어긋나면 슬롯을 잘못 잡은 것이다.
   const mismatch = interpret.toOutcomeId(
