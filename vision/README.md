@@ -1,4 +1,4 @@
-# gempago/vision
+# gemnave/vision
 
 젬 가공 화면에서 "다음 항목" 4개를 읽는다. **범용 OCR 을 쓰지 않는다.**
 
