@@ -1,7 +1,7 @@
 /*
  * 다이아 숫자 분류기 학습 (의존성 없는 순수 JS).
  *
- *   node web/gempago/vision/train-digit-cnn.js <dataset.json> [--write]
+ *   node vision/train-digit-cnn.js <dataset.json> [--write]
  *
  * 왜 CNN 인가: 템플릿 매칭은 픽셀을 그대로 비교하므로 캡처 출처(스크린샷 vs 화면 공유)가
  * 바뀌면 무너진다. 숫자는 글자가 3~12px 라 특히 심하다. 분류기는 흐림·리샘플을 증강으로

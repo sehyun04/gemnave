@@ -1,8 +1,8 @@
 /*
  * 리롤/가공 횟수 숫자 템플릿 생성 + 정확도 측정.
  *
- *   node web/gempago/vision/make-meta-templates.js          측정만 (leave-one-out)
- *   node web/gempago/vision/make-meta-templates.js --write  templates/ 와 manifest.json 갱신
+ *   node vision/make-meta-templates.js          측정만 (leave-one-out)
+ *   node vision/make-meta-templates.js --write  templates/ 와 manifest.json 갱신
  *
  * 다이아(make-diamond-templates.js)와 달리 배경이 민무늬 버튼이라 배경판이 필요 없다.
  * 정답표는 captures.json 의 ui 필드 - 리롤은 39장 전부, 가공 횟수는 버튼이 화면에

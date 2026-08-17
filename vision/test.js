@@ -1,5 +1,5 @@
 /*
- * vision 회귀 테스트.  node web/gempago/vision/test.js
+ * vision 회귀 테스트.  node vision/test.js
  *
  * 지금 검증하는 건 두 가지다.
  * 1. NCC 구현이 맞는가 (자기 자신과 1.0, 반전과 -1, 균일면에서 무응답)

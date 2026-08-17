@@ -2,7 +2,7 @@
  * 젬파고 계산기 UI.
  *
  * 계산은 전부 worker.js 안의 solver.js 가 한다. 여기서는 확률을 흉내내지 않는다.
- * 값이 의심스러우면 `node web/gempago/test.js` 가 같은 코드를 검증한다.
+ * 값이 의심스러우면 `node test.js` 가 같은 코드를 검증한다.
  */
 (function () {
   'use strict';

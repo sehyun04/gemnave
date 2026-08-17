@@ -1,8 +1,8 @@
 /*
  * 다이아(젬 현재 수치) 템플릿·배경판 생성 + 정확도 측정.
  *
- *   node web/gempago/vision/make-diamond-templates.js          측정만 (leave-one-out)
- *   node web/gempago/vision/make-diamond-templates.js --write  templates/ 와 manifest.json 갱신
+ *   node vision/make-diamond-templates.js          측정만 (leave-one-out)
+ *   node vision/make-diamond-templates.js --write  templates/ 와 manifest.json 갱신
  *
  * 왜 스크립트로 남기나: 캡처가 늘어날 때마다 템플릿을 다시 떠야 하는데, 손으로 뜨면
  * 잘리는 위치가 그때그때 달라져서 (README "숫자 템플릿은 덩어리 순번으로" 절) 재현이 안 된다.

@@ -1,7 +1,7 @@
 /*
  * 다이아 숫자 분류기 학습용 데이터셋을 만든다.
  *
- *   node web/gempago/vision/make-digit-dataset.js [출력경로.json]
+ *   node vision/make-digit-dataset.js [출력경로.json]
  *
  * 왜 배경판을 안 쓰나: 지금 방식(배경판을 빼고 잔차에서 숫자를 찾기)은 배경판이
  * 캡처 출처에 묶여 있다. 같은 1920 화면이라도 게임 스크린샷과 브라우저 화면 공유는
