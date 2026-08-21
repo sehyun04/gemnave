@@ -30,7 +30,7 @@
     return p.toFixed(4) + '%p';
   }
 
-  const worker = new Worker('worker.js?v=2026-08-17.2');
+  const worker = new Worker('worker.js?v=2026-08-21.2');
   let seq = 0;
   const pending = new Map();
 
@@ -202,6 +202,9 @@
         span.textContent = names[key];
       }
     }
+    // 목표 버튼도 같은 단어를 쓴다. "포인트" 로 놔두면 혼돈젬을 보면서 질서 목표를
+    // 누르는 것처럼 읽힌다.
+    for (const el of document.querySelectorAll('.point-word')) el.textContent = s.point;
   }
 
   function readTarget() {
@@ -213,12 +216,30 @@
     return t;
   }
 
+  /*
+   * 수치 4칸은 평소에 접어 둔다. 프리셋과 나란히 놔두면 목표를 고르는 자리에
+   * 고르는 것(버튼)과 적는 것(select)이 섞여서, 눌러야 하는지 맞춰야 하는지가
+   * 매번 헷갈린다. "직접 정하기" 도 선택지 하나로 두고 누를 때만 편다.
+   */
+  let manualOpen = false;
+  function setManual(on) {
+    manualOpen = on;
+    $('target').hidden = !on;
+    $('targetHint').hidden = !on;
+    $('manualBtn').setAttribute('aria-pressed', on ? 'true' : 'false');
+  }
+
   function syncPresetButtons() {
     const cur = JSON.stringify(readTarget());
-    for (const b of $('presets').children) {
+    let matched = false;
+    for (const b of $('presets').querySelectorAll('button[data-target]')) {
       const same = JSON.stringify(JSON.parse(b.dataset.target)) === cur;
-      b.setAttribute('aria-pressed', same ? 'true' : 'false');
+      if (same) matched = true;
+      b.setAttribute('aria-pressed', same && !manualOpen ? 'true' : 'false');
     }
+    // 어느 프리셋과도 안 맞는 목표는 사람이 직접 잡은 것이다. 화면을 읽다가
+    // 그렇게 된 경우까지 포함해서, 그때는 수치 칸이 보여야 근거가 보인다.
+    if (!matched && !manualOpen) setManual(true);
   }
 
   // ---- 접이식 패널 요약 -----------------------------------------------------
@@ -285,6 +306,8 @@
   $('presets').addEventListener('click', (e) => {
     const b = e.target.closest('button');
     if (!b) return;
+    if (b === $('manualBtn')) { setManual(true); syncPresetButtons(); return; }
+    setManual(false);
     const t = JSON.parse(b.dataset.target);
     for (const { key } of STATS) $('tgt_' + key).value = String(t[key] || 1);
     syncPresetButtons();
@@ -416,7 +439,7 @@
       verdict.innerHTML = '';
       verdict.append('현재 목표 달성 확률 ' + pct(res.value));
       const small = document.createElement('small');
-      small.textContent = '화면에 뜬 4개를 고르면 굴리기/리롤을 판단한다.';
+      small.textContent = '화면에 뜬 4개를 고르면 가공/리롤을 판단한다.';
       verdict.appendChild(small);
     } else {
       const isCommit = d.action === 'commit';
@@ -426,16 +449,16 @@
 
       verdict.className = 'verdict ' + (marginal ? '' : d.action);
       verdict.innerHTML = '';
-      verdict.append(marginal ? '어느 쪽이든 비슷하다' : (isCommit ? '굴린다' : '리롤한다'));
+      verdict.append(marginal ? '어느 쪽이든 비슷하다' : (isCommit ? '가공하기' : '리롤한다'));
 
       const small = document.createElement('small');
       if (d.reroll === null) {
         small.textContent = '리롤이 없어서 선택지가 없다.';
       } else if (marginal) {
         small.textContent =
-          `굳이 따지면 ${isCommit ? '굴리기' : '리롤'}이 ${pp(d.gain)} 앞선다. 리롤을 아껴도 된다.`;
+          `굳이 따지면 ${isCommit ? '가공' : '리롤'}이 ${pp(d.gain)} 앞선다. 리롤을 아껴도 된다.`;
       } else {
-        small.textContent = `${isCommit ? '리롤' : '굴리기'}보다 ${pp(d.gain)} 유리하다.`;
+        small.textContent = `${isCommit ? '리롤' : '가공'}보다 ${pp(d.gain)} 유리하다.`;
       }
       verdict.appendChild(small);
     }
@@ -459,7 +482,7 @@
     tb.parentElement.hidden = !(res.perPick && res.perPick.length);
 
     $('meta').textContent =
-      `남은 가공 ${state.n}회, 리롤 ${state.r}회 · 이 목표 전체 풀이 ${res.ms}ms`;
+      `남은 가공 ${state.n}회, 리롤 ${state.r}회`;
 
     replayVerdict(verdict.textContent + '|' + $('valCommit').textContent + '|' + $('valReroll').textContent);
   }
@@ -1038,6 +1061,7 @@
     nameTimer = setTimeout(refresh, 250);
   });
 
+  setManual(false);
   syncPresetButtons();
   renderLive();
   refresh();

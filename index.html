@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>젬나브 - 가공 계산기</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7.2 2.6h9.6l4.2 6.2L12 21.6 3 8.8z' fill='%234d8dfa'/%3E%3Cpath d='M7.2 2.6 3 8.8h18l-4.2-6.2z' fill='%23ffffff' opacity='.3'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css?v=2026-08-17.2">
+<link rel="stylesheet" href="style.css?v=2026-08-21.2">
 </head>
 <body>
 
@@ -41,7 +41,7 @@
     <details class="panel fold" id="foldGem">
       <summary>
         <span class="fold-title">읽은 젬</span>
-        <span class="fold-sum" id="gemSummary">아직 안 읽었다</span>
+        <span class="fold-sum" id="gemSummary">아직 젬이 확인되지 않았습니다</span>
       </summary>
       <div class="fold-body">
         <p class="hint"></p>
@@ -145,7 +145,7 @@
       </div>
 
       <table class="breakdown">
-        <thead><tr><th>걸리는 항목</th><th>적용 후 달성 확률</th></tr></thead>
+        <thead><tr><th>나오는 항목</th><th>적용 후 달성 확률</th></tr></thead>
         <tbody id="breakdown"></tbody>
       </table>
 
@@ -164,17 +164,15 @@
 
     <section class="panel">
       <h2>목표</h2>
-      <p class="hint">목표를 설정해주세요.</p>
 
       <div class="presets" id="presets">
-        <button type="button" data-target='{"will":5,"point":5}'>의지력/포인트 5/5</button>
+        <button type="button" data-target='{"will":5,"point":5}'>의지력/<span class="point-word">포인트</span> 5/5</button>
         <button type="button" data-target='{"will":5,"point":5,"opt1":5,"opt2":5}'>전부 5/5/5/5</button>
-        <button type="button" data-target='{"opt1":4}'>1번 효과 4 이상</button>
-        <button type="button" data-target='{"will":4,"point":4}'>의지력/포인트 4/4</button>
+        <button type="button" id="manualBtn">직접 정하기</button>
       </div>
 
-      <div class="stats" id="target"></div>
-      <p class="hint last">1 은 상관없음과 같습니다.</p>
+      <div class="stats" id="target" hidden></div>
+      <p class="hint last" id="targetHint" hidden>1 은 상관없음과 같습니다.</p>
     </section>
 
   </div>
@@ -203,7 +201,7 @@
   </div>
 </div>
 
-<script src="vision/atlas-browser.js?v=2026-08-17.2"></script>
-<script src="app.js?v=2026-08-17.2"></script>
+<script src="vision/atlas-browser.js?v=2026-08-21.2"></script>
+<script src="app.js?v=2026-08-21.2"></script>
 </body>
 </html>
